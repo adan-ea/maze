@@ -1,8 +1,13 @@
-import graph.Maze;
+import maze.Maze;
+
+import java.io.File;
+
 public class Main {
     public static void main(String[] args)  {
+
         System.out.println("Hello world");
-        Maze maze = new Maze("./ressources/oval_01.map.txt");
+        File file = new File("./ressources/rect_05.map.txt");
+        Maze maze = new Maze(file);
     }
 }
 
