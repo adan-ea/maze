@@ -60,7 +60,7 @@ public class Maze {
             for (int colomn : row){
                 System.out.print(colomn);
             }
-        
+            System.out.println();
         }
     }
 
