@@ -1,20 +1,12 @@
-package coordinate;
+package maze;
 
 public class Coordinate {
     private int x;
     private int y;
-    private Coordinate parent;
 
     Coordinate(int x, int y) {
         this.x = x;
         this.y = y;
-        this.parent = null;
-    }
-
-    Coordinate(int x, int y, Coordinate parent) {
-        this.x = x;
-        this.y = y;
-        this.parent = parent;
     }
 
     public int getX() {
@@ -33,11 +25,5 @@ public class Coordinate {
         this.y = y;
     }
 
-    public Coordinate getParent() {
-        return parent;
-    }
 
-    public void setParent(Coordinate parent) {
-        this.parent = parent;
-    }
 }

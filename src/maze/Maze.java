@@ -1,16 +1,23 @@
 package maze;
 
-import coordinate.Coordinate;
-
 import java.io.*;
+import java.util.PriorityQueue;
 
 public class Maze {
-    private int[][] maze;
-    private boolean[][] visited;
-    private Coordinate start;
-    private Coordinate end;
 
-    public Maze(File file) {
+    private Node[][] grid;
+
+    private PriorityQueue<Node> openSet;
+    private  boolean [][] closedSet;
+
+    private Node start;
+    private Node end;
+
+
+    public Maze(File file){
+        this.openSet = new PriorityQueue<Node>((Node node1, Node node2) ->{
+            return node1.getFinalCost() < node2.getFinalCost() ? 1 : node1.getFinalCost() == node2.getFinalCost() ? 0 : 1;
+        });
         initalizeMaze(readFile(file));
     }
 
@@ -23,8 +30,6 @@ public class Maze {
                 fileStr += readLine + "\n";
             }
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -36,39 +41,34 @@ public class Maze {
             throw new IllegalArgumentException("empty lines data");
         }
         String[] lines = fileText.split("[\r]?\n");
-        this.maze = new int[lines.length][lines[0].length()];
-        this.visited = new boolean[lines.length][lines[0].length()];
+        this.grid = new Node[lines.length+1][lines[0].length()+1];
 
-        for (int row = 0; row < getHeight(); row++) {
-            for (int colomn = 0; colomn < getWidth(); colomn++) {
-                switch (lines[row].charAt(colomn)) {
-                    case '*':
-                        maze[row][colomn] = MazeElement.WALL.getValue();
-                        break;
-                    case '1':
-                        maze[row][colomn] = MazeElement.START.getValue();
-                        break;
-                    case '2':
-                        maze[row][colomn] = MazeElement.EXIT.getValue();
-                        break;
-                    default:
-                        maze[row][colomn] = MazeElement.ROAD.getValue();
+         for (int i = 0; i < lines.length; i++){
+            for (int j = 0; j < lines[0].length(); j++) {
+                switch (lines[i].charAt(j)) {
+                    case '1' -> {
+                        this.start = new Node(i, j);
+                        this.grid[i][j] = start;
+                    }
+                    case '2' -> {
+                        this.end = new Node(i, j);
+                        this.grid[i][j] = end;
+                    }
+                    case '*' -> {
+                        this.grid[i][j] = new Node(i, j);
+                        this.grid[i][j].setWall(true);
+                    }
+                    default -> this.grid[i][j] = new Node(i, j);
                 }
             }
         }
-        for (int[] row : maze){
-            for (int colomn : row){
-                System.out.print(colomn);
+        for (int i = 0; i < lines.length; i++){
+            for (int j = 0; j < lines[0].length(); j++) {
+                this.grid[i][j].addNeighbors(this.grid);
+                System.out.print(this.grid[i][j]);
             }
             System.out.println();
         }
-    }
 
-    public int getHeight() {
-        return this.maze.length;
-    }
-
-    public int getWidth() {
-        return this.maze[0].length;
     }
 }
