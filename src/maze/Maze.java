@@ -1,6 +1,7 @@
 package maze;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 public class Maze {
@@ -8,7 +9,7 @@ public class Maze {
     private Node[][] grid;
 
     private PriorityQueue<Node> openSet;
-    private  boolean [][] closedSet;
+    private ArrayList<Node> closedSet;
 
     private Node start;
     private Node end;
@@ -71,4 +72,22 @@ public class Maze {
         }
 
     }
+
+    public PriorityQueue<Node> getOpenSet() {
+        return openSet;
+    }
+
+    public void setOpenSet(PriorityQueue<Node> openSet) {
+        this.openSet = openSet;
+    }
+
+    public ArrayList<Node> getClosedSet() {
+        return closedSet;
+    }
+
+    public void setClosedSet(ArrayList<Node> closedSet) {
+        this.closedSet = closedSet;
+    }
+
 }
+
