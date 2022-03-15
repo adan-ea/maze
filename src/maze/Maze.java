@@ -1,24 +1,21 @@
 package maze;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.PriorityQueue;
+import java.util.Arrays;
+import java.util.Objects;
 
 public class Maze {
 
     private Node[][] grid;
 
-    private PriorityQueue<Node> openSet;
-    private ArrayList<Node> closedSet;
-
     private Node start;
     private Node end;
 
-
-    public Maze(File file){
-        this.openSet = new PriorityQueue<Node>((Node node1, Node node2) ->{
-            return node1.getFinalCost() < node2.getFinalCost() ? 1 : node1.getFinalCost() == node2.getFinalCost() ? 0 : 1;
-        });
+    public Maze(File file) {
         initalizeMaze(readFile(file));
     }
 
@@ -42,9 +39,9 @@ public class Maze {
             throw new IllegalArgumentException("empty lines data");
         }
         String[] lines = fileText.split("[\r]?\n");
-        this.grid = new Node[lines.length+1][lines[0].length()+1];
+        this.grid = new Node[lines.length + 1][lines[0].length() + 1];
 
-         for (int i = 0; i < lines.length; i++){
+        for (int i = 0; i < lines.length; i++) {
             for (int j = 0; j < lines[0].length(); j++) {
                 switch (lines[i].charAt(j)) {
                     case '1' -> {
@@ -63,7 +60,7 @@ public class Maze {
                 }
             }
         }
-        for (int i = 0; i < lines.length; i++){
+        for (int i = 0; i < lines.length; i++) {
             for (int j = 0; j < lines[0].length(); j++) {
                 this.grid[i][j].addNeighbors(this.grid);
                 System.out.print(this.grid[i][j]);
@@ -73,21 +70,50 @@ public class Maze {
 
     }
 
-    public PriorityQueue<Node> getOpenSet() {
-        return openSet;
+    //TODO toString
+    public void printPath(ArrayList<Coordinate> path) {
+        Node[][] tempGrid = Arrays.stream(grid).map(Node[]::clone).toArray(Node[][]::new);
+        for (Coordinate coordinate : path) {
+            if (isEntry(coordinate.getX(), coordinate.getY()) || isExit(coordinate.getX(), coordinate.getY())) {
+                continue;
+            }
+            tempGrid[coordinate.getX()][coordinate.getY()].setPath(true);
+        }
+
     }
 
-    public void setOpenSet(PriorityQueue<Node> openSet) {
-        this.openSet = openSet;
+    public int getWidth() {
+        return grid[0].length - 1;
     }
 
-    public ArrayList<Node> getClosedSet() {
-        return closedSet;
+    public int getHeight() {
+        return grid.length - 1;
     }
 
-    public void setClosedSet(ArrayList<Node> closedSet) {
-        this.closedSet = closedSet;
+    public Node getEntry() {
+        return start;
     }
+
+    public boolean isEntry(int x, int y) {
+        return x == start.getX() && y == start.getY();
+    }
+
+    public Node getExit() {
+        return start;
+    }
+
+    public boolean isExit(int x, int y) {
+        return x == end.getX() && y == end.getY();
+    }
+
+    public boolean isValidLocation(int row, int col) {
+        return row >= 0 && row < getHeight() && col >= 0 && col < getWidth();
+    }
+
+    public boolean isWall(int row, int col) {
+        return Objects.equals(grid[row][col].toString(), "*");
+    }
+
 
 }
 

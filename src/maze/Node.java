@@ -13,6 +13,7 @@ public class Node extends Coordinate {
     private ArrayList<Node> neighbors;
 
     private boolean wall = false;
+    private boolean path = false;
 
     public Node(int x, int y) {
         super(x, y);
@@ -83,18 +84,20 @@ public class Node extends Coordinate {
         this.neighbors = neighbors;
     }
 
-    public boolean isWall() {
-        return wall;
-    }
-
     public void setWall(boolean wall) {
         this.wall = wall;
+    }
+
+    public void setPath(boolean path) {
+        this.path = path;
     }
 
     @Override
     public String toString() {
         if (this.wall)
-            return "/";
+            return "*";
+        if (this.path)
+            return "P";
         return " ";
     }
 }
