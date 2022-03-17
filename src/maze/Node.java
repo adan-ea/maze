@@ -34,7 +34,6 @@ public class Node extends Coordinate implements Comparator<Node> {
         int currentCost = this.getCurrentCost() + cost;
         setParent(currentNode);
         setCurrentCost(currentCost);
-        cal
 
     }
 

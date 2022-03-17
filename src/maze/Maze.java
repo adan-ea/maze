@@ -15,7 +15,7 @@ public class Maze {
     private Node start;
     private Node end;
 
-    public Maze(File file) {
+    Maze(File file) {
         initalizeMaze(readFile(file));
     }
 
@@ -104,6 +104,14 @@ public class Maze {
 
     public boolean isExit(int x, int y) {
         return x == end.getX() && y == end.getY();
+    }
+
+    public Node[][] getGrid() {
+        return grid;
+    }
+
+    public void setGrid(Node[][] grid) {
+        this.grid = grid;
     }
 
     public boolean isValidLocation(int row, int col) {

@@ -1,25 +1,28 @@
 package maze;
 
-import java.util.ArrayList;
+import java.io.File;
+import java.util.HashSet;
 import java.util.PriorityQueue;
-
+import static constants.Constants.DEFAULT_PATH;
 import static java.lang.Math.sqrt;
 
 public class AStarMazeSolver {
 
-    private final Maze maze;
+    private Maze maze;
     private Node position;
-    private Node[][] grid;
     private PriorityQueue<Node> openSet;
-    private ArrayList<Node> closedSet;
+    private HashSet<Node> closedSet;
 
-    AStarMazeSolver(Maze maze) {
-        this.maze = maze;
+    public AStarMazeSolver(File file) {
+        maze = new Maze(file);
+        this.openSet = new PriorityQueue<>();
+        this.closedSet = new HashSet<>();
     }
 
-    void initiateSolver() {
+   private void initiateSolver() {
         maze.getEntry().setFinalCost(0);
         //grid[maze.getEntry().getX()][maze.getEntry().getY()].:
+        this.position =
         openSet.clear();
         openSet.add(maze.getEntry());
         closedSet.clear();

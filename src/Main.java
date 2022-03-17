@@ -1,4 +1,5 @@
-import maze.Maze;
+
+import maze.AStarMazeSolver;
 
 import java.io.File;
 
@@ -9,7 +10,7 @@ public class Main {
 
         System.out.println("Hello world");
         File file = new File(PATH + "/rect_05.map.txt");
-        Maze maze = new Maze(file);
+        AStarMazeSolver aStarMazeSolver = new AStarMazeSolver(file);
 
     }
 }
