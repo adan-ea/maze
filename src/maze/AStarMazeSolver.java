@@ -3,30 +3,27 @@ package maze;
 import java.io.File;
 import java.util.HashSet;
 import java.util.PriorityQueue;
-import static constants.Constants.DEFAULT_PATH;
-import static java.lang.Math.sqrt;
 
 public class AStarMazeSolver {
 
-    private Maze maze;
+    private Labyrinth labyrinth;
     private Node position;
     private PriorityQueue<Node> openSet;
     private HashSet<Node> closedSet;
 
     public AStarMazeSolver(File file) {
-        maze = new Maze(file);
+        this.labyrinth = new Labyrinth(file);
         this.openSet = new PriorityQueue<>();
         this.closedSet = new HashSet<>();
+        this.position = this.labyrinth.getEntry();
+
+        initiateSolver();
     }
 
    private void initiateSolver() {
-        maze.getEntry().setFinalCost(0);
-        //grid[maze.getEntry().getX()][maze.getEntry().getY()].:
-        this.position =
-        openSet.clear();
-        openSet.add(maze.getEntry());
-        closedSet.clear();
-        maze.getEntry().setParent(null);
+        labyrinth.getEntry().setFinalCost(0);
+        openSet.add(labyrinth.getEntry());
+        labyrinth.getEntry().setParent(null);
     }
 
   /*  private boolean explore(Maze maze, int row, int col, ArrayList<Coordinate> path) {

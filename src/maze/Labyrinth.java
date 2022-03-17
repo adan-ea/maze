@@ -6,16 +6,15 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Objects;
 
-public class Maze {
+public class Labyrinth {
 
     private Node[][] grid;
 
     private Node start;
     private Node end;
 
-    Maze(File file) {
+    Labyrinth(File file) {
         initalizeMaze(readFile(file));
     }
 
