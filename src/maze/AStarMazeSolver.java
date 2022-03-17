@@ -26,15 +26,35 @@ public class AStarMazeSolver {
         labyrinth.getEntry().setParent(null);
     }
 
-  /*  private boolean explore(Maze maze, int row, int col, ArrayList<Coordinate> path) {
-        while (openSet.size() != 0) {
+    public void addNeighbors(Node[][] grid) {
+        int row = this.position.getX();
+        int col = this.position.getY();
 
+        if (row + 1 < grid.length) {
+            if (col - 1 >= 0) {
+                checkNode(currentNode, col - 1, lowerRow, getDiagonalCost()); // Comment this line if diagonal movements are not allowed
+            }
+            if (col + 1 < getSearchArea()[0].length) {
+                checkNode(currentNode, col + 1, lowerRow, getDiagonalCost()); // Comment this line if diagonal movements are not allowed
+            }
+            checkNode(currentNode, col, lowerRow, getHvCost());
         }
-        if (!maze.isValidLocation(row, col) || maze.isWall(row, col)) {
-            return false;
+        if (col - 1 >= 0) {
+            checkNode(currentNode, col - 1, middleRow, getHvCost());
         }
-        return true;
+        if (col + 1 < getSearchArea()[0].length) {
+            checkNode(currentNode, col + 1, middleRow, getHvCost());
+        }
+        if (upperRow >= 0) {
+            if (col - 1 >= 0) {
+                checkNode(currentNode, col - 1, upperRow, getDiagonalCost()); // Comment this if diagonal movements are not allowed
+            }
+            if (col + 1 < getSearchArea()[0].length) {
+                checkNode(currentNode, col + 1, upperRow, getDiagonalCost()); // Comment this if diagonal movements are not allowed
+            }
+            checkNode(currentNode, col, upperRow, getHvCost());
+        }
     }
-*/
+
 
 }

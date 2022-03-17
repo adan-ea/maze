@@ -1,5 +1,7 @@
 package maze;
 
+import com.sun.source.tree.ErroneousTree;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -15,7 +17,7 @@ public class Labyrinth {
     private Node end;
 
     Labyrinth(File file) {
-        initalizeMaze(readFile(file));
+        initializeLabyrinth(readFile(file));
     }
 
     private String readFile(File file) {
@@ -33,7 +35,7 @@ public class Labyrinth {
         return fileStr;
     }
 
-    private void initalizeMaze(String fileText) {
+    private void initializeLabyrinth(String fileText) {
         if (fileText == null || (fileText = fileText.trim()).length() == 0) {
             throw new IllegalArgumentException("empty lines data");
         }
@@ -45,23 +47,28 @@ public class Labyrinth {
                 switch (lines[i].charAt(j)) {
                     case '1' -> {
                         this.start = new Node(i, j);
+                        this.start.calculateHeuristic(getExit());
                         this.grid[i][j] = start;
                     }
                     case '2' -> {
                         this.end = new Node(i, j);
+                        this.end.calculateHeuristic(getExit());
                         this.grid[i][j] = end;
                     }
                     case '*' -> {
                         this.grid[i][j] = new Node(i, j);
                         this.grid[i][j].setWall(true);
                     }
-                    default -> this.grid[i][j] = new Node(i, j);
+                    default -> {
+                        Node node = new Node(i , j);
+                        node.calculateHeuristic(getExit());
+                        this.grid[i][j] = node;
+                    }
                 }
             }
         }
         for (int i = 0; i < lines.length; i++) {
             for (int j = 0; j < lines[0].length(); j++) {
-                this.grid[i][j].addNeighbors(this.grid);
                 System.out.print(this.grid[i][j]);
             }
             System.out.println();
@@ -69,7 +76,7 @@ public class Labyrinth {
 
     }
 
-    //TODO toString
+    //TODO:toString
     public void printPath(ArrayList<Coordinate> path) {
         Node[][] tempGrid = Arrays.stream(grid).map(Node[]::clone).toArray(Node[][]::new);
         for (Coordinate coordinate : path) {
@@ -98,7 +105,7 @@ public class Labyrinth {
     }
 
     public Node getExit() {
-        return start;
+        return end;
     }
 
     public boolean isExit(int x, int y) {

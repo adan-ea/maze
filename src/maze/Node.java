@@ -25,51 +25,39 @@ public class Node extends Coordinate implements Comparator<Node> {
     }
 
 
-    public void  calculateHeuristic(Node finalNode){
-        int heuristic = Math.abs(finalNode.getX() - getX() ) + Math.abs(finalNode.getY() - getY());
+    public void calculateHeuristic(Node finalNode) {
+        int heuristic = Math.abs(finalNode.getX() - getX()) + Math.abs(finalNode.getY() - getY());
         this.setHeuristicCost(heuristic);
     }
 
-    public void setWeight(Node currentNode, int cost){
+    public void setWeight(Node currentNode, int cost) {
         int currentCost = this.getCurrentCost() + cost;
         setParent(currentNode);
         setCurrentCost(currentCost);
+        calculateFinalCost();
 
     }
 
-    public void calculateFinalCost(){
+    public boolean checkBetterPath(Node currentNode, int cost) {
+        int currentCost = currentNode.getCurrentCost() + cost;
+        if (currentCost < this.getCurrentCost()) {
+            setWeight(currentNode, cost);
+            return true;
+        }
+        return false;
+    }
+
+    public void calculateFinalCost() {
         int finalCost = this.getCurrentCost() + this.getHeuristicCost();
         setFinalCost(finalCost);
     }
-    public void addNeighbors(Node[][] grid) {
-        int row = this.getX();
-        int column = this.getY();
 
-        if (row < grid.length - 1) {
-            this.neighbors.add(grid[row + 1][column]);
-        }
-        if (row > 0) {
-            this.neighbors.add(grid[row - 1][column]);
-        }
-        if (column < grid.length - 1) {
-            this.neighbors.add(grid[row][column + 1]);
-        }
-        if (column > 0) {
-            this.neighbors.add(grid[row][column - 1]);
-        }
-        if (row > 0 && column > 0) {
-            this.neighbors.add(grid[row - 1][column - 1]);
-        }
-        if (row < grid[0].length - 1 && column > 0) {
-            this.neighbors.add(grid[row + 1][column - 1]);
-        }
-        if (row > 0 && column < grid.length - 1) {
-            this.neighbors.add(grid[row - 1][column + 1]);
-        }
-        if (row < grid[0].length - 1 && column < grid.length - 1) {
-            this.neighbors.add(grid[row + 1][column + 1]);
-        }
+
+
+    private Node checkNode(Node currentNode, int col, int row, int cost){
+
     }
+
 
 
     public Node getParent() {
@@ -127,6 +115,7 @@ public class Node extends Coordinate implements Comparator<Node> {
     public boolean isPath() {
         return path;
     }
+
     @Override
     public String toString() {
         if (this.wall)
@@ -140,18 +129,19 @@ public class Node extends Coordinate implements Comparator<Node> {
     @Override
     public boolean equals(Object o) {
 
-        if(o == null){
+        if (o == null) {
             return false;
         }
-        if(o.getClass() != this.getClass()){
+        if (o.getClass() != this.getClass()) {
             return false;
         }
-        if( this == o ){
+        if (this == o) {
             return true;
         }
         Node other = (Node) o;
         return this.getX() == other.getX() && this.getY() == other.getY();
     }
+
     @Override
     public int compare(Node node1, Node node2) {
         return Integer.compare(node1.getFinalCost(), node2.getFinalCost());
