@@ -26,7 +26,7 @@ public class AStarMazeSolver {
         maze.getEntry().setParent(null);
     }
 
-    private boolean explore(Maze maze, int row, int col, ArrayList<Coordinate> path) {
+  /*  private boolean explore(Maze maze, int row, int col, ArrayList<Coordinate> path) {
         while (openSet.size() != 0) {
 
         }
@@ -35,10 +35,6 @@ public class AStarMazeSolver {
         }
         return true;
     }
+*/
 
-    void determineHeuristicCost() {
-        int dx = maze.getExit().getX() - position.getX();
-        int dy = maze.getExit().getY() - position.getY();
-        position.setHeuristicCost((int) sqrt((dx * dx) + (dy * dy)));
-    }
 }

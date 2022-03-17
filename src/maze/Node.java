@@ -1,14 +1,18 @@
 package maze;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Objects;
 
-public class Node extends Coordinate {
+public class Node extends Coordinate implements Comparator<Node> {
 
     private Node parent;
 
     private int heuristicCost;
 
     private int finalCost;
+
+    private int CurrentCost;
 
     private ArrayList<Node> neighbors;
 
@@ -21,6 +25,23 @@ public class Node extends Coordinate {
     }
 
 
+    public void  calculateHeuristic(Node finalNode){
+        int heuristic = Math.abs(finalNode.getX() - getX() ) + Math.abs(finalNode.getY() - getY());
+        this.setHeuristicCost(heuristic);
+    }
+
+    public void setWeight(Node currentNode, int cost){
+        int currentCost = this.getCurrentCost() + cost;
+        setParent(currentNode);
+        setCurrentCost(currentCost);
+        cal
+
+    }
+
+    public void calculateFinalCost(){
+        int finalCost = this.getCurrentCost() + this.getHeuristicCost();
+        setFinalCost(finalCost);
+    }
     public void addNeighbors(Node[][] grid) {
         int row = this.getX();
         int column = this.getY();
@@ -92,6 +113,21 @@ public class Node extends Coordinate {
         this.path = path;
     }
 
+    public int getCurrentCost() {
+        return CurrentCost;
+    }
+
+    public void setCurrentCost(int currentCost) {
+        CurrentCost = currentCost;
+    }
+
+    public boolean isWall() {
+        return wall;
+    }
+
+    public boolean isPath() {
+        return path;
+    }
     @Override
     public String toString() {
         if (this.wall)
@@ -99,5 +135,26 @@ public class Node extends Coordinate {
         if (this.path)
             return "P";
         return " ";
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+
+        if(o == null){
+            return false;
+        }
+        if(o.getClass() != this.getClass()){
+            return false;
+        }
+        if( this == o ){
+            return true;
+        }
+        Node other = (Node) o;
+        return this.getX() == other.getX() && this.getY() == other.getY();
+    }
+    @Override
+    public int compare(Node node1, Node node2) {
+        return Integer.compare(node1.getFinalCost(), node2.getFinalCost());
     }
 }

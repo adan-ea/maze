@@ -6,4 +6,5 @@ public class Constants {
     //public static final String PATH ="/usr/src/mazeDorvilleElArabi/ressources";
     public static final String PATH = "./ressources";
 
+
 }

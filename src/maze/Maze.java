@@ -110,9 +110,6 @@ public class Maze {
         return row >= 0 && row < getHeight() && col >= 0 && col < getWidth();
     }
 
-    public boolean isWall(int row, int col) {
-        return Objects.equals(grid[row][col].toString(), "*");
-    }
 
 
 }
