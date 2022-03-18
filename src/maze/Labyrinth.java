@@ -1,7 +1,5 @@
 package maze;
 
-import com.sun.source.tree.ErroneousTree;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -60,7 +58,7 @@ public class Labyrinth {
                         this.grid[i][j].setWall(true);
                     }
                     default -> {
-                        Node node = new Node(i , j);
+                        Node node = new Node(i, j);
                         node.calculateHeuristic(getExit());
                         this.grid[i][j] = node;
                     }
@@ -73,19 +71,6 @@ public class Labyrinth {
             }
             System.out.println();
         }
-
-    }
-
-    //TODO:toString
-    public void printPath(ArrayList<Coordinate> path) {
-        Node[][] tempGrid = Arrays.stream(grid).map(Node[]::clone).toArray(Node[][]::new);
-        for (Coordinate coordinate : path) {
-            if (isEntry(coordinate.getX(), coordinate.getY()) || isExit(coordinate.getX(), coordinate.getY())) {
-                continue;
-            }
-            tempGrid[coordinate.getX()][coordinate.getY()].setPath(true);
-        }
-
     }
 
     public int getWidth() {
@@ -116,15 +101,7 @@ public class Labyrinth {
         return grid;
     }
 
-    public void setGrid(Node[][] grid) {
-        this.grid = grid;
-    }
-
     public boolean isValidLocation(int row, int col) {
         return row >= 0 && row < getHeight() && col >= 0 && col < getWidth();
     }
-
-
-
 }
-

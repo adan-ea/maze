@@ -2,17 +2,12 @@ package maze;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Objects;
 
 public class Node extends Coordinate implements Comparator<Node> {
 
     private Node parent;
 
-    private int heuristicCost;
-
-    private int finalCost;
-
-    private int CurrentCost;
+    private int heuristicCost, finalCost, CurrentCost;
 
     private ArrayList<Node> neighbors;
 
@@ -23,7 +18,6 @@ public class Node extends Coordinate implements Comparator<Node> {
         super(x, y);
         this.neighbors = new ArrayList<>();
     }
-
 
     public void calculateHeuristic(Node finalNode) {
         int heuristic = Math.abs(finalNode.getX() - getX()) + Math.abs(finalNode.getY() - getY());
@@ -52,12 +46,9 @@ public class Node extends Coordinate implements Comparator<Node> {
         setFinalCost(finalCost);
     }
 
-
-
-    private Node checkNode(Node currentNode, int col, int row, int cost){
-
+    private Node checkNode(Node currentNode, int col, int row, int cost) {
+        return null;
     }
-
 
 
     public Node getParent() {
@@ -92,14 +83,6 @@ public class Node extends Coordinate implements Comparator<Node> {
         this.neighbors = neighbors;
     }
 
-    public void setWall(boolean wall) {
-        this.wall = wall;
-    }
-
-    public void setPath(boolean path) {
-        this.path = path;
-    }
-
     public int getCurrentCost() {
         return CurrentCost;
     }
@@ -112,8 +95,16 @@ public class Node extends Coordinate implements Comparator<Node> {
         return wall;
     }
 
+    public void setWall(boolean wall) {
+        this.wall = wall;
+    }
+
     public boolean isPath() {
         return path;
+    }
+
+    public void setPath(boolean path) {
+        this.path = path;
     }
 
     @Override
