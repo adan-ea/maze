@@ -1,53 +1,54 @@
 package maze;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
-public class Node extends Coordinate {
+public class Node extends Coordinate{
 
     private Node parent;
 
-    private int heuristicCost;
-
-    private int finalCost;
+    private int heuristicCost, finalCost, currentCost;
+    private boolean isFirst, isLast;
 
     private ArrayList<Node> neighbors;
 
     private boolean wall = false;
+    private boolean path = false;
 
     public Node(int x, int y) {
         super(x, y);
         this.neighbors = new ArrayList<>();
     }
 
+    public void calculateHeuristic(Node finalNode) {
+        int heuristic = Math.abs(finalNode.getX() - getX()) + Math.abs(finalNode.getY() - getY());
+        this.setHeuristicCost(heuristic);
+    }
 
-    public void addNeighbors(Node[][] grid) {
-        int row = this.getX();
-        int column = this.getY();
+    public void setWeight(Node currentNode, int cost) {
+        int currentCost = this.getCurrentCost() + cost;
+        setParent(currentNode);
+        setCurrentCost(currentCost);
+        calculateFinalCost();
 
-        if (row < grid.length - 1) {
-            this.neighbors.add(grid[row + 1][column]);
+    }
+
+    public boolean checkBetterPath(Node currentNode, int cost) {
+        int currentCost = currentNode.getCurrentCost() + cost;
+        if (currentCost < this.getCurrentCost()) {
+            setWeight(currentNode, cost);
+            return true;
         }
-        if (row > 0) {
-            this.neighbors.add(grid[row - 1][column]);
-        }
-        if (column < grid.length - 1) {
-            this.neighbors.add(grid[row][column + 1]);
-        }
-        if (column > 0) {
-            this.neighbors.add(grid[row][column - 1]);
-        }
-        if (row > 0 && column > 0) {
-            this.neighbors.add(grid[row - 1][column - 1]);
-        }
-        if (row < grid[0].length - 1 && column > 0) {
-            this.neighbors.add(grid[row + 1][column - 1]);
-        }
-        if (row > 0 && column < grid.length - 1) {
-            this.neighbors.add(grid[row - 1][column + 1]);
-        }
-        if (row < grid[0].length - 1 && column < grid.length - 1) {
-            this.neighbors.add(grid[row + 1][column + 1]);
-        }
+        return false;
+    }
+
+    public void calculateFinalCost() {
+        int finalCost = this.getCurrentCost() + this.getHeuristicCost();
+        setFinalCost(finalCost);
+    }
+
+    private Node checkNode(Node currentNode, int col, int row, int cost) {
+        return null;
     }
 
 
@@ -83,6 +84,14 @@ public class Node extends Coordinate {
         this.neighbors = neighbors;
     }
 
+    public int getCurrentCost() {
+        return currentCost;
+    }
+
+    public void setCurrentCost(int currentCost) {
+        this.currentCost = currentCost;
+    }
+
     public boolean isWall() {
         return wall;
     }
@@ -91,10 +100,58 @@ public class Node extends Coordinate {
         this.wall = wall;
     }
 
+    public boolean isPath() {
+        return path;
+    }
+
+    public void setPath(boolean path) {
+        this.path = path;
+    }
+
+    public void setFirst(boolean first){
+        this.isFirst = first;
+    }
+    public  void setLast(boolean last){
+        this.isLast = last;
+    }
+
+    public boolean isFirst() {
+        return isFirst;
+    }
+
+    public boolean isLast() {
+        return isLast;
+    }
+
     @Override
     public String toString() {
+        if(this.isFirst)
+            return "\u001B[32m"+ "1" +"\u001B[0m";
+        if(this.isLast)
+            return "\u001B[34m" +"2"+"\u001B[0m";
         if (this.wall)
-            return "/";
+            return "*";
+        if (this.path)
+            return "\u001B[35m"+"-"+"\u001B[0m";
         return " ";
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+
+        if (o == null) {
+            return false;
+        }
+        if (o.getClass() != this.getClass()) {
+            return false;
+        }
+        if (this == o) {
+            return true;
+        }
+        Node other = (Node) o;
+        return this.getX() == other.getX() && this.getY() == other.getY();
+    }
+
+
 }
