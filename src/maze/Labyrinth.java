@@ -38,19 +38,19 @@ public class Labyrinth {
             throw new IllegalArgumentException("empty lines data");
         }
         String[] lines = fileText.split("[\r]?\n");
-        this.grid = new Node[lines.length + 1][lines[0].length() + 1];
+        this.grid = new Node[lines.length][lines[0].length()];
 
         for (int i = 0; i < lines.length; i++) {
             for (int j = 0; j < lines[0].length(); j++) {
                 switch (lines[i].charAt(j)) {
                     case '1' -> {
                         this.start = new Node(i, j);
-                        this.start.calculateHeuristic(getExit());
+                        this.start.setFirst(true);
                         this.grid[i][j] = start;
                     }
                     case '2' -> {
                         this.end = new Node(i, j);
-                        this.end.calculateHeuristic(getExit());
+                        this.end.setLast(true);
                         this.grid[i][j] = end;
                     }
                     case '*' -> {
@@ -59,14 +59,15 @@ public class Labyrinth {
                     }
                     default -> {
                         Node node = new Node(i, j);
-                        node.calculateHeuristic(getExit());
                         this.grid[i][j] = node;
                     }
                 }
             }
         }
-        for (int i = 0; i < lines.length; i++) {
-            for (int j = 0; j < lines[0].length(); j++) {
+    }
+    public  void displayGrid(){
+        for (int i = 0; i < this.getGrid().length; i++) {
+            for (int j = 0; j < this.getGrid()[0].length; j++) {
                 System.out.print(this.grid[i][j]);
             }
             System.out.println();

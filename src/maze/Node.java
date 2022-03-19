@@ -3,11 +3,12 @@ package maze;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class Node extends Coordinate implements Comparator<Node> {
+public class Node extends Coordinate{
 
     private Node parent;
 
-    private int heuristicCost, finalCost, CurrentCost;
+    private int heuristicCost, finalCost, currentCost;
+    private boolean isFirst, isLast;
 
     private ArrayList<Node> neighbors;
 
@@ -84,11 +85,11 @@ public class Node extends Coordinate implements Comparator<Node> {
     }
 
     public int getCurrentCost() {
-        return CurrentCost;
+        return currentCost;
     }
 
     public void setCurrentCost(int currentCost) {
-        CurrentCost = currentCost;
+        this.currentCost = currentCost;
     }
 
     public boolean isWall() {
@@ -107,12 +108,31 @@ public class Node extends Coordinate implements Comparator<Node> {
         this.path = path;
     }
 
+    public void setFirst(boolean first){
+        this.isFirst = first;
+    }
+    public  void setLast(boolean last){
+        this.isLast = last;
+    }
+
+    public boolean isFirst() {
+        return isFirst;
+    }
+
+    public boolean isLast() {
+        return isLast;
+    }
+
     @Override
     public String toString() {
+        if(this.isFirst)
+            return "\u001B[32m"+ "1" +"\u001B[0m";
+        if(this.isLast)
+            return "\u001B[34m" +"2"+"\u001B[0m";
         if (this.wall)
             return "*";
         if (this.path)
-            return "P";
+            return "\u001B[35m"+"-"+"\u001B[0m";
         return " ";
     }
 
@@ -133,8 +153,5 @@ public class Node extends Coordinate implements Comparator<Node> {
         return this.getX() == other.getX() && this.getY() == other.getY();
     }
 
-    @Override
-    public int compare(Node node1, Node node2) {
-        return Integer.compare(node1.getFinalCost(), node2.getFinalCost());
-    }
+
 }
