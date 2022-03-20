@@ -1,36 +1,23 @@
 package maze;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-
-public class Node extends Coordinate{
+public class Node extends Coordinate {
 
     private Node parent;
 
     private int heuristicCost, finalCost, currentCost;
+
     private boolean isFirst, isLast;
-
-    private ArrayList<Node> neighbors;
-
     private boolean wall = false;
     private boolean path = false;
 
     public Node(int x, int y) {
         super(x, y);
-        this.neighbors = new ArrayList<>();
+
     }
 
     public void calculateHeuristic(Node finalNode) {
         int heuristic = Math.abs(finalNode.getX() - getX()) + Math.abs(finalNode.getY() - getY());
         this.setHeuristicCost(heuristic);
-    }
-
-    public void setWeight(Node currentNode, int cost) {
-        int currentCost = this.getCurrentCost() + cost;
-        setParent(currentNode);
-        setCurrentCost(currentCost);
-        calculateFinalCost();
-
     }
 
     public boolean checkBetterPath(Node currentNode, int cost) {
@@ -47,10 +34,13 @@ public class Node extends Coordinate{
         setFinalCost(finalCost);
     }
 
-    private Node checkNode(Node currentNode, int col, int row, int cost) {
-        return null;
-    }
+    public void setWeight(Node currentNode, int cost) {
+        int currentCost = this.getCurrentCost() + cost;
+        setParent(currentNode);
+        setCurrentCost(currentCost);
+        calculateFinalCost();
 
+    }
 
     public Node getParent() {
         return parent;
@@ -76,14 +66,6 @@ public class Node extends Coordinate{
         this.finalCost = finalCost;
     }
 
-    public ArrayList<Node> getNeighbors() {
-        return neighbors;
-    }
-
-    public void setNeighbors(ArrayList<Node> neighbors) {
-        this.neighbors = neighbors;
-    }
-
     public int getCurrentCost() {
         return currentCost;
     }
@@ -100,42 +82,30 @@ public class Node extends Coordinate{
         this.wall = wall;
     }
 
-    public boolean isPath() {
-        return path;
-    }
-
     public void setPath(boolean path) {
         this.path = path;
     }
 
-    public void setFirst(boolean first){
+    public void setFirst(boolean first) {
         this.isFirst = first;
     }
-    public  void setLast(boolean last){
+
+    public void setLast(boolean last) {
         this.isLast = last;
-    }
-
-    public boolean isFirst() {
-        return isFirst;
-    }
-
-    public boolean isLast() {
-        return isLast;
     }
 
     @Override
     public String toString() {
-        if(this.isFirst)
-            return "\u001B[32m"+ "1" +"\u001B[0m";
-        if(this.isLast)
-            return "\u001B[34m" +"2"+"\u001B[0m";
+        if (this.isFirst)
+            return "\u001B[32m" + "1" + "\u001B[0m";
+        if (this.isLast)
+            return "\u001B[34m" + "2" + "\u001B[0m";
         if (this.wall)
             return "*";
         if (this.path)
-            return "\u001B[35m"+"-"+"\u001B[0m";
+            return "\u001B[35m" + "-" + "\u001B[0m";
         return " ";
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -152,6 +122,4 @@ public class Node extends Coordinate{
         Node other = (Node) o;
         return this.getX() == other.getX() && this.getY() == other.getY();
     }
-
-
 }

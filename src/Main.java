@@ -6,9 +6,8 @@ import static constants.Constants.PATH;
 
 public class Main {
     public static void main(String[] args) {
-
-        System.out.println("Hello world");
-        File file = new File(PATH + "/rect_05.map.txt");
+        String lab = args[0];
+        File file = new File(PATH + "/" + lab + ".map.txt");
         AStarMazeSolver aStarMazeSolver = new AStarMazeSolver(file);
     }
 }

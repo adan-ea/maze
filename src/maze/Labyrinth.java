@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Labyrinth {
 
@@ -65,7 +63,8 @@ public class Labyrinth {
             }
         }
     }
-    public  void displayGrid(){
+
+    public void displayGrid() {
         for (int i = 0; i < this.getGrid().length; i++) {
             for (int j = 0; j < this.getGrid()[0].length; j++) {
                 System.out.print(this.grid[i][j]);
@@ -74,35 +73,15 @@ public class Labyrinth {
         }
     }
 
-    public int getWidth() {
-        return grid[0].length - 1;
-    }
-
-    public int getHeight() {
-        return grid.length - 1;
-    }
-
     public Node getEntry() {
         return start;
-    }
-
-    public boolean isEntry(int x, int y) {
-        return x == start.getX() && y == start.getY();
     }
 
     public Node getExit() {
         return end;
     }
 
-    public boolean isExit(int x, int y) {
-        return x == end.getX() && y == end.getY();
-    }
-
     public Node[][] getGrid() {
         return grid;
-    }
-
-    public boolean isValidLocation(int row, int col) {
-        return row >= 0 && row < getHeight() && col >= 0 && col < getWidth();
     }
 }
