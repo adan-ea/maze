@@ -27,9 +27,9 @@ public class Labyrinth {
     }
 
     /**
-     * Read file from text.
-     * @param file File.
-     * @return Lines.
+     * Reads file from text.
+     * @param file file.
+     * @return     lines.
      */
     private String readFile(File file) {
         StringBuilder fileStr = new StringBuilder();
@@ -47,8 +47,8 @@ public class Labyrinth {
     }
 
     /**
-     * Initizlaze Labyrinth.
-     * @param fileText FileText.
+     * Initialize Labyrinth.
+     * @param fileText fileText.
      */
     private void initializeLabyrinth(String fileText) {
         if (fileText == null || (fileText = fileText.trim()).length() == 0) {
@@ -84,7 +84,7 @@ public class Labyrinth {
     }
 
     /**
-     * Display the Grid.
+     * Displays the Grid.
      */
     public void displayGrid() {
         for (int i = 0; i < this.getGrid().length; i++) {
@@ -95,14 +95,29 @@ public class Labyrinth {
         }
     }
 
+    /**
+     * Gets entry.
+     *
+     * @return the entry
+     */
     public Node getEntry() {
         return start;
     }
 
+    /**
+     * Gets exit.
+     *
+     * @return the exit
+     */
     public Node getExit() {
         return end;
     }
 
+    /**
+     * Get the actual maze as a grid
+     *
+     * @return a grid of nodes
+     */
     public Node[][] getGrid() {
         return grid;
     }
