@@ -4,7 +4,6 @@
 
 We used the A* Algorithm to find the best path possible.
 
-
 To win you some time, here are all the commands you need : 
 
 ## Build the image : 
