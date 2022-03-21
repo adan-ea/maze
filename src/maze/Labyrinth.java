@@ -7,15 +7,30 @@ import java.io.IOException;
 
 public class Labyrinth {
 
+    /**
+     * Gets or Sets Node.
+     */
     private Node[][] grid;
 
+    /**
+     * Gets or sets start.
+     */
     private Node start;
+
+    /**
+     * Gets or sets end;
+     */
     private Node end;
 
     Labyrinth(File file) {
         initializeLabyrinth(readFile(file));
     }
 
+    /**
+     * Read file from text.
+     * @param file File.
+     * @return Lines.
+     */
     private String readFile(File file) {
         StringBuilder fileStr = new StringBuilder();
         try {
@@ -31,6 +46,10 @@ public class Labyrinth {
         return fileStr.toString();
     }
 
+    /**
+     * Initizlaze Labyrinth.
+     * @param fileText FileText.
+     */
     private void initializeLabyrinth(String fileText) {
         if (fileText == null || (fileText = fileText.trim()).length() == 0) {
             throw new IllegalArgumentException("empty lines data");
@@ -64,6 +83,9 @@ public class Labyrinth {
         }
     }
 
+    /**
+     * Display the Grid.
+     */
     public void displayGrid() {
         for (int i = 0; i < this.getGrid().length; i++) {
             for (int j = 0; j < this.getGrid()[0].length; j++) {
