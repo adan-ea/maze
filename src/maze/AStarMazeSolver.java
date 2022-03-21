@@ -14,7 +14,7 @@ public class AStarMazeSolver {
 
     public AStarMazeSolver(File file) {
         this.labyrinth = new Labyrinth(file);
-        this.openSet = new PriorityQueue<Node>(new Comparator<Node>() {
+        this.openSet = new PriorityQueue<>(new Comparator<Node>() {
             @Override
             public int compare(Node node0, Node node1) {
                 return Integer.compare(node0.getFinalCost(), node1.getFinalCost());
@@ -50,13 +50,7 @@ public class AStarMazeSolver {
         int middleRow = currentNode.getX();
         int upperRow = currentNode.getX() - 1;
         if (row + 1 < this.labyrinth.getGrid()[0].length) {
-            if (col - 1 >= 0) {
-                checkNode(currentNode, col - 1, lowerRow, Constants.DIAGONAL_COST);
-            }
-            if (col + 1 < labyrinth.getGrid()[0].length) {
-                checkNode(currentNode, col + 1, lowerRow, Constants.DIAGONAL_COST);
-            }
-            checkNode(currentNode, col, lowerRow, Constants.HV_COST);
+            addRows(currentNode, col, lowerRow);
         }
         if (col - 1 >= 0) {
             checkNode(currentNode, col - 1, middleRow, Constants.HV_COST);
@@ -65,13 +59,7 @@ public class AStarMazeSolver {
             checkNode(currentNode, col + 1, middleRow, Constants.HV_COST);
         }
         if (upperRow >= 0) {
-            if (col - 1 >= 0) {
-                checkNode(currentNode, col - 1, upperRow, Constants.DIAGONAL_COST);
-            }
-            if (col + 1 < labyrinth.getGrid()[0].length) {
-                checkNode(currentNode, col + 1, upperRow, Constants.DIAGONAL_COST);
-            }
-            checkNode(currentNode, col, upperRow, Constants.HV_COST);
+            addRows(currentNode, col, upperRow);
         }
     }
 
@@ -98,7 +86,7 @@ public class AStarMazeSolver {
                 addNeighbors(currentNode);
             }
         }
-        return new ArrayList<Node>();
+        return new ArrayList<>();
     }
 
 
@@ -118,6 +106,16 @@ public class AStarMazeSolver {
                 }
             }
         }
+    }
+
+    private void addRows(Node currentNode, int col, int upperRow) {
+        if (col - 1 >= 0) {
+            checkNode(currentNode, col - 1, upperRow, Constants.DIAGONAL_COST);
+        }
+        if (col + 1 < labyrinth.getGrid()[0].length) {
+            checkNode(currentNode, col + 1, upperRow, Constants.DIAGONAL_COST);
+        }
+        checkNode(currentNode, col, upperRow, Constants.HV_COST);
     }
 
     private boolean isFinalNode(Node currentNode) {

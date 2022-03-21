@@ -103,7 +103,7 @@ public class Node extends Coordinate {
         if (this.wall)
             return "*";
         if (this.path)
-            return "\u001B[35m" + "-" + "\u001B[0m";
+            return "\033[31m" + "-" + "\033[0m";
         return " ";
     }
 

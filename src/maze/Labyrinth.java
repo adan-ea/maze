@@ -17,18 +17,18 @@ public class Labyrinth {
     }
 
     private String readFile(File file) {
-        String fileStr = "";
+        StringBuilder fileStr = new StringBuilder();
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
             String readLine = "";
             while ((readLine = bufferedReader.readLine()) != null) {
-                fileStr += readLine + "\n";
+                fileStr.append(readLine).append("\n");
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return fileStr;
+        return fileStr.toString();
     }
 
     private void initializeLabyrinth(String fileText) {
