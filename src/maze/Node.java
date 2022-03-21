@@ -10,6 +10,10 @@ public class Node extends Coordinate {
     private boolean wall = false;
     private boolean path = false;
 
+
+
+    private  String symbol;
+
     public Node(int x, int y) {
         super(x, y);
 
@@ -93,6 +97,13 @@ public class Node extends Coordinate {
     public void setLast(boolean last) {
         this.isLast = last;
     }
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
 
     @Override
     public String toString() {
@@ -103,7 +114,7 @@ public class Node extends Coordinate {
         if (this.wall)
             return "*";
         if (this.path)
-            return "\033[31m" + "-" + "\033[0m";
+            return "\033[31m" + getSymbol() + "\033[0m";
         return " ";
     }
 

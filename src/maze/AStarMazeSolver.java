@@ -49,14 +49,14 @@ public class AStarMazeSolver {
         int lowerRow = currentNode.getX() + 1;
         int middleRow = currentNode.getX();
         int upperRow = currentNode.getX() - 1;
-        if (row + 1 < this.labyrinth.getGrid()[0].length) {
+        if (row +1 < (this.labyrinth.getGrid().length)) {
             addRows(currentNode, col, lowerRow);
         }
         if (col - 1 >= 0) {
-            checkNode(currentNode, col - 1, middleRow, Constants.HV_COST);
+            checkNode(currentNode, col - 1, middleRow, Constants.HV_COST , "-");
         }
         if (col + 1 < labyrinth.getGrid()[0].length) {
-            checkNode(currentNode, col + 1, middleRow, Constants.HV_COST);
+            checkNode(currentNode, col + 1, middleRow, Constants.HV_COST, "-");
         }
         if (upperRow >= 0) {
             addRows(currentNode, col, upperRow);
@@ -90,11 +90,12 @@ public class AStarMazeSolver {
     }
 
 
-    private void checkNode(Node currentNode, int col, int row, int cost) {
+    private void checkNode(Node currentNode, int col, int row, int cost, String symbole) {
         Node adjacentNode = labyrinth.getGrid()[row][col];
         if (!adjacentNode.isWall() && !closedSet.contains(adjacentNode)) {
             if (!openSet.contains(adjacentNode)) {
                 adjacentNode.setWeight(currentNode, cost);
+                currentNode.setSymbol(symbole);
                 openSet.add(adjacentNode);
             } else {
                 boolean changed = adjacentNode.checkBetterPath(currentNode, cost);
@@ -108,14 +109,14 @@ public class AStarMazeSolver {
         }
     }
 
-    private void addRows(Node currentNode, int col, int upperRow) {
+    private void addRows(Node currentNode, int col, int row) {
         if (col - 1 >= 0) {
-            checkNode(currentNode, col - 1, upperRow, Constants.DIAGONAL_COST);
+            checkNode(currentNode, col - 1, row, Constants.DIAGONAL_COST, "|");
         }
         if (col + 1 < labyrinth.getGrid()[0].length) {
-            checkNode(currentNode, col + 1, upperRow, Constants.DIAGONAL_COST);
+            checkNode(currentNode, col + 1, row, Constants.DIAGONAL_COST, "-");
         }
-        checkNode(currentNode, col, upperRow, Constants.HV_COST);
+        checkNode(currentNode, col, row, Constants.HV_COST,"|");
     }
 
     private boolean isFinalNode(Node currentNode) {
