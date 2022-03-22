@@ -6,11 +6,16 @@ We used the A* Algorithm to find the best path possible.
 
 To win you some time, here are all the commands you need : 
 
-## Build the image : 
-
+##pull from Docker-Hub
+```ps1
+docker pull adanea/maze-dorville-elarabi
+```
+##OR
+## Clone and Build the image :
 ```ps1
 docker build -t maze-dorville-elarabi .
 ```
+
 
 ## Run the algorithm for the mazes : 
 
