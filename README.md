@@ -58,7 +58,7 @@ docker run --name mazeDEA5 -e LAB=rect_05 adanea/maze-dorville-elarabi:latest
 # Add your own maze
 To add another maze :
 * You MUST add it in the ``resources`` file 
-* You MUST have the extension .map.txt in your file (e.g: myAmazingMaze.map.txt)
+* You MUST have the extension .map.txt in your file (e.g: ``myAmazingMaze.map.txt``)
 * When creating a new container make sure to put ONLY the name of your maze and not the `.map.txt` extension as an env variable (e.g `LAB=myAmazingMaze`)
 * Enjoy our marvelous A* Algorithm
 
