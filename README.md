@@ -14,13 +14,19 @@ docker build -t maze-dorville-elarabi .
 
 ## Run the algorithm for the mazes : 
 
+### Oval Maze 1 :
+
+```ps1
+docker run --name mazeDEAO1 -e LAB=oval_01 maze-dorville-elarabi:latest
+```
+
 ### Maze 1 : 
 
 ```ps1
 docker run --name mazeDEA1 -e LAB=rect_01 maze-dorville-elarabi:latest
 ```
 
-### Maze 2 (not working):
+### Maze 2:
 
 ```ps1 
 docker run --name mazeDEA2 -e LAB=rect_02 maze-dorville-elarabi:latest
@@ -54,7 +60,7 @@ To add another maze :
 ## Delete all the containers : 
 
 ```ps1 
-docker rm --force mazeDEA1, mazeDEA2, mazeDEA3, mazeDEA4, mazeDEA5
+docker rm --force mazeDEAO1, mazeDEA1, mazeDEA2, mazeDEA3, mazeDEA4, mazeDEA5
 ```
 
 ## Delete the image :
